@@ -25,8 +25,9 @@
         },
         {
             "fieldname": "pinjaman_produk_id",
-            "fieldtype": "Data",
-            "label": "Pinjaman Produk ID"
+            "fieldtype": "Link",
+            "label": "Pinjaman Produk ID",
+            "options": "Pinjaman Produk"
         },
         {
             "fieldname": "top",
