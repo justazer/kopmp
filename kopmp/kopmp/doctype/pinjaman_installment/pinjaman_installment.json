@@ -1,0 +1,109 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:id",
+    "creation": "2026-01-27 10:55:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "fields": [
+        {
+            "fieldname": "id",
+            "fieldtype": "Data",
+            "label": "ID",
+            "unique": 1,
+            "in_list_view": 1,
+            "read_only": 1
+        },
+        {
+            "fieldname": "pinjaman_id",
+            "fieldtype": "Link",
+            "label": "Pinjaman ID",
+            "options": "Pinjaman",
+            "reqd": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "no",
+            "fieldtype": "Int",
+            "label": "No",
+            "reqd": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "due_date",
+            "fieldtype": "Date",
+            "label": "Due Date",
+            "reqd": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "nominal_pokok",
+            "fieldtype": "Currency",
+            "label": "Nominal Pokok",
+            "default": "0",
+            "reqd": 1
+        },
+        {
+            "fieldname": "nominal_bunga",
+            "fieldtype": "Currency",
+            "label": "Nominal Bunga",
+            "default": "0",
+            "reqd": 1
+        },
+        {
+            "fieldname": "nominal_denda",
+            "fieldtype": "Currency",
+            "label": "Nominal Denda",
+            "default": "0"
+        },
+        {
+            "fieldname": "paid_pokok",
+            "fieldtype": "Currency",
+            "label": "Paid Pokok",
+            "default": "0"
+        },
+        {
+            "fieldname": "paid_bunga",
+            "fieldtype": "Currency",
+            "label": "Paid Bunga",
+            "default": "0"
+        },
+        {
+            "fieldname": "paid_denda",
+            "fieldtype": "Currency",
+            "label": "Paid Denda",
+            "default": "0"
+        },
+        {
+            "fieldname": "paid_date",
+            "fieldtype": "Date",
+            "label": "Paid Date"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2026-01-27 10:55:00.000000",
+    "modified_by": "Administrator",
+    "module": "KopMP",
+    "name": "Pinjaman Installment",
+    "naming_rule": "By fieldname",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}
