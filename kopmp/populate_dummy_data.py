@@ -3,13 +3,12 @@ from frappe.utils import add_days, nowdate
 import sys
 import os
 
+
 # Remove the script's directory from sys.path to avoid shadowing the app package
 script_dir = os.path.dirname(os.path.abspath(__file__))
 if script_dir in sys.path:
     sys.path.remove(script_dir)
 
-# Insert the repo root to sys.path
-sys.path.insert(0, os.path.abspath("../apps/kopmp"))
 
 
 
@@ -88,14 +87,77 @@ def create_pinjaman_produk():
 
     frappe.db.commit()
 
+def create_user_profiles():
+    profiles = [
+        {
+            "id": "USR-001",
+            "user_name": "Budi Santoso",
+            "phone": "081234567890",
+            "address": "Jl. Merdeka No. 1, Jakarta",
+            "email": "budi.santoso@example.com",
+            "status": "Active"
+        },
+        {
+            "id": "USR-002",
+            "user_name": "Siti Aminah",
+            "phone": "081987654321",
+            "address": "Jl. Kebon Jeruk No. 10, Jakarta",
+            "email": "siti.aminah@example.com",
+            "status": "Active"
+        },
+        {
+            "id": "USR-003",
+            "user_name": "Ahmad Dani",
+            "phone": "085678912345",
+            "address": "Jl. Diponegoro No. 5, Surabaya",
+            "email": "ahmad.dani@example.com",
+            "status": "Inactive"
+        }
+    ]
+
+    for p in profiles:
+        if not frappe.db.exists("User Profile", {"id": p["id"]}):
+            doc = frappe.get_doc({
+                "doctype": "User Profile",
+                "id": p["id"],
+                "user_name": p["user_name"],
+                "phone": p["phone"],
+                "address": p["address"],
+                "email": p["email"],
+                "status": p["status"]
+            })
+            doc.insert()
+            print(f"Created User Profile: {p['id']}")
+        else:
+            print(f"User Profile {p['id']} already exists.")
+
+    frappe.db.commit()
+
+
 def run():
     try:
+        print(f"DEBUG: CWD: {os.getcwd()}")
+        if os.path.exists("sites"):
+            print("DEBUG: 'sites' directory found.")
+            print(f"DEBUG: 'sites' content: {os.listdir('sites')}")
+        else:
+            print("DEBUG: 'sites' directory NOT found.")
+        
+        # Change directory to 'sites' to simplify path resolution for frappe
+        if os.path.exists("sites"):
+            os.chdir("sites")
+            print(f"DEBUG: Changed CWD to: {os.getcwd()}")
+        else:
+             print("DEBUG: 'sites' directory not found in CWD, assuming we are already there or path is wrong.")
+
         frappe.init(site="mysite.localhost")
         frappe.connect()
         create_pinjaman_produk()
+        create_user_profiles()
     finally:
         if frappe.db:
             frappe.destroy()
+
 
 if __name__ == "__main__":
     run()
