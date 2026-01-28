@@ -30,7 +30,7 @@
         },
         {
             "fieldname": "rate",
-            "fieldtype": "Float",
+            "fieldtype": "Percent",
             "label": "Rate"
         }
     ],

@@ -31,12 +31,12 @@
         },
         {
             "fieldname": "top",
-            "fieldtype": "Int",
+            "fieldtype": "Select",
             "label": "TOP"
         },
         {
             "fieldname": "rate",
-            "fieldtype": "Float",
+            "fieldtype": "Percent",
             "label": "Rate"
         },
         {
