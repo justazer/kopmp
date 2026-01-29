@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestCbsja(FrappeTestCase):
+class TestPinjamanInstallment(FrappeTestCase):
 	pass

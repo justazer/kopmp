@@ -148,13 +148,13 @@ app_license = "mit"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 # 	"all": [
 # 		"kopmp.tasks.all"
 # 	],
-# 	"daily": [
-# 		"kopmp.tasks.daily"
-# 	],
+	"daily": [
+		"kopmp.scheduled_tasks.update_denda_harian"
+	],
 # 	"hourly": [
 # 		"kopmp.tasks.hourly"
 # 	],
@@ -164,7 +164,7 @@ app_license = "mit"
 # 	"monthly": [
 # 		"kopmp.tasks.monthly"
 # 	],
-# }
+}
 
 # Testing
 # -------

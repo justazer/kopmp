@@ -150,7 +150,7 @@ def run():
         else:
              print("DEBUG: 'sites' directory not found in CWD, assuming we are already there or path is wrong.")
 
-        frappe.init(site="mysite.localhost")
+        frappe.init(site="erpnext.local")
         frappe.connect()
         create_pinjaman_produk()
         create_user_profiles()
