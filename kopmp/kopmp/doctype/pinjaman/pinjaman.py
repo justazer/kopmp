@@ -18,3 +18,10 @@ class Pinjaman(Document):
 		pencairan.request_at = self.request_at
 		pencairan.approved_at = None
 		pencairan.insert()
+
+		# Send Email Notification
+		email = frappe.db.get_value("User Profile", self.profile_id, "email")
+		if email:
+			subject = f"Pinjaman Created: {self.name}"
+			message = f"Dear User,<br><br>Your Pinjaman application {self.name} for {self.nominal} has been created and is currently Requested.<br><br>Thank you."
+			frappe.sendmail(recipients='reza.baharsyah@indocyber.id', subject=subject, message=message, sender='Koperasi App <no-reply@brevosend.com>' ,delayed=False)

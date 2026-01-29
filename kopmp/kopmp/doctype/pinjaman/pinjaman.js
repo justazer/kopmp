@@ -10,11 +10,30 @@ frappe.ui.form.on("Pinjaman", {
             frm.trigger('set_top_options');
         }
 
-        // Hide standard Submit button (usually btn-secondary or similar depending on Frappe version)
-        // In recent Frappe, actions are in frm.page.actions
-        if (!frm.is_new()) {
-            frm.page.btn_secondary.hide();
-        }
+        // Aggressively hide Submit button
+        setTimeout(() => {
+            frm.page.remove_inner_button('Submit');
+            frm.page.remove_inner_button(__("Submit"));
+
+            // CSS/jQuery fallback
+            frm.page.wrapper.find('button[data-label="Submit"]').hide();
+            frm.page.wrapper.find('button:contains("Submit")').hide();
+
+            if (frm.page.btn_secondary) {
+                frm.page.btn_secondary.hide();
+            }
+        }, 100);
+
+        // Polling to ensure it stays hidden if re-rendered
+        let hideSubmitInterval = setInterval(() => {
+            if (frm.page.wrapper.find('button[data-label="Submit"]').is(":visible")) {
+                frm.page.remove_inner_button('Submit');
+                frm.page.wrapper.find('button[data-label="Submit"]').hide();
+            }
+        }, 1000);
+
+        // Clear interval after some time to avoid performance hit
+        setTimeout(() => clearInterval(hideSubmitInterval), 10000);
 
         if (frm.doc.status === 'Requested' && !frm.doc.__islocal) {
             frm.add_custom_button(__('Approve'), function () {
