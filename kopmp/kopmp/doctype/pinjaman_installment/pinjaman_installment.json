@@ -24,7 +24,6 @@
   {
    "fieldname": "id",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "ID",
    "read_only": 1,
    "unique": 1
@@ -33,6 +32,7 @@
    "fieldname": "pinjaman_id",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Pinjaman ID",
    "options": "Pinjaman",
    "reqd": 1
@@ -40,14 +40,12 @@
   {
    "fieldname": "no",
    "fieldtype": "Int",
-   "in_list_view": 1,
    "label": "No",
    "reqd": 1
   },
   {
    "fieldname": "due_date",
    "fieldtype": "Date",
-   "in_list_view": 1,
    "label": "Due Date",
    "reqd": 1
   },
@@ -55,6 +53,7 @@
    "default": "0",
    "fieldname": "nominal_pokok",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Nominal Pokok",
    "reqd": 1
   },
@@ -62,6 +61,7 @@
    "default": "0",
    "fieldname": "nominal_bunga",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Nominal Bunga",
    "reqd": 1
   },
@@ -108,7 +108,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-29 14:08:23.576233",
+ "modified": "2026-01-29 15:53:01.783097",
  "modified_by": "Administrator",
  "module": "KopMP",
  "name": "Pinjaman Installment",

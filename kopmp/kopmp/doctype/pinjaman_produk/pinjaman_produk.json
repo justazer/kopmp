@@ -1,59 +1,65 @@
 {
-    "actions": [],
-    "allow_rename": 1,
-    "autoname": "field:id",
-    "creation": "2026-01-26 17:15:00.000000",
-    "doctype": "DocType",
-    "editable_grid": 1,
-    "engine": "InnoDB",
-    "fields": [
-        {
-            "fieldname": "id",
-            "fieldtype": "Data",
-            "label": "ID",
-            "unique": 1,
-            "reqd": 1,
-            "in_list_view": 1
-        },
-        {
-            "fieldname": "tipe",
-            "fieldtype": "Data",
-            "label": "Tipe",
-            "in_list_view": 1
-        },
-        {
-            "fieldname": "admin_fee",
-            "fieldtype": "Currency",
-            "label": "Admin Fee"
-        },
-        {
-            "fieldname": "start_date",
-            "fieldtype": "Date",
-            "label": "Start Date"
-        },
-        {
-            "fieldname": "end_date",
-            "fieldtype": "Date",
-            "label": "End Date"
-        }
-    ],
-    "module": "KopMP",
-    "name": "Pinjaman Produk",
-    "owner": "Administrator",
-    "permissions": [
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "System Manager",
-            "share": 1,
-            "write": 1
-        }
-    ],
-    "sort_field": "modified",
-    "sort_order": "DESC"
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format: Pinjaman {tipe}",
+ "creation": "2026-01-26 17:15:00",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tipe",
+  "admin_fee",
+  "start_date",
+  "end_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "tipe",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Tipe"
+  },
+  {
+   "fieldname": "admin_fee",
+   "fieldtype": "Currency",
+   "label": "Admin Fee"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date"
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-29 16:04:42.706895",
+ "modified_by": "Administrator",
+ "module": "KopMP",
+ "name": "Pinjaman Produk",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
 }

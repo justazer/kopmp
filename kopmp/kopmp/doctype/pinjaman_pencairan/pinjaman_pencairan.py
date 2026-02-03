@@ -19,25 +19,54 @@ class PinjamanPencairan(Document):
 		pinjaman = frappe.get_doc("Pinjaman", self.pinjaman_id)
 		produk = frappe.get_doc("Pinjaman Produk", pinjaman.pinjaman_produk_id)
 		
+		# Common Variables
+		nominal = float(pinjaman.nominal)
+		rate_percent = float(pinjaman.rate)
+		top = int(pinjaman.top)
+		admin_fee = float(produk.admin_fee or 0)
+		
+		start_date = getdate(self.approved_at) or getdate()
+		next_month = start_date + relativedelta(months=1)
+		current_due_date = get_first_day(next_month)
+
 		if produk.tipe == "Anuitas":
-			# Placeholder for Anuitas logic
-			pass
+			# --- Annuity Logic (PMT) ---
+			monthly_rate = (rate_percent / 100) / 12
+			
+			if monthly_rate > 0:
+				pmt = (nominal * monthly_rate) / (1 - (1 + monthly_rate) ** -top)
+			else:
+				pmt = nominal / top
+			
+			# Admin Fee per month (User requested no division, implying monthly fee)
+			monthly_admin_fee = admin_fee 
+			remaining_principal = nominal
+			
+			for i in range(1, top + 1):
+				interest_payment = remaining_principal * monthly_rate
+				principal_payment = pmt - interest_payment
+				
+				# Adjust last installment
+				if i == top:
+					principal_payment = remaining_principal
+				
+				remaining_principal -= principal_payment
+				
+				doc = frappe.new_doc("Pinjaman Installment")
+				doc.pinjaman_id = self.pinjaman_id
+				doc.no = i
+				doc.due_date = current_due_date
+				doc.nominal_pokok = principal_payment + monthly_admin_fee
+				doc.nominal_bunga = interest_payment
+				doc.insert()
+				
+				current_due_date = current_due_date + relativedelta(months=1)
+
 		else:
-			# Ensure fields are floats for calculation
-			nominal = float(pinjaman.nominal)
-			rate_percent = float(pinjaman.rate)
-			top = int(pinjaman.top)
-			
-			nominal_pokok = nominal / top
+			# --- Standard Flat Logic ---
+			# Nominal Pokok includes Principal + Admin Fee (Monthly)
+			nominal_pokok = (nominal / top) + admin_fee
 			nominal_bunga = nominal * (rate_percent / 100)
-			
-			# Start next month
-			start_date = getdate(self.approved_at) or getdate()
-			# Logic: 1st of next month
-			next_month = start_date + relativedelta(months=1)
-			first_due_date = get_first_day(next_month)
-			
-			current_due_date = getdate(first_due_date)
 
 			for i in range(1, top + 1):
 				doc = frappe.new_doc("Pinjaman Installment")
@@ -46,9 +75,6 @@ class PinjamanPencairan(Document):
 				doc.due_date = current_due_date
 				doc.nominal_pokok = nominal_pokok
 				doc.nominal_bunga = nominal_bunga
-				# doc.amount and doc.status do not exist in the DocType
-				# Status is inferred from paid_date (if set, it's paid)
 				doc.insert()
 				
-				# Increment month
 				current_due_date = current_due_date + relativedelta(months=1)
