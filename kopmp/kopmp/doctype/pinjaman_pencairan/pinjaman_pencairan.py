@@ -13,7 +13,11 @@ class PinjamanPencairan(Document):
 
 	def on_submit(self):
 		if self.status == 'Disbursed' or self.status == 'Approved': # Handling potentially different approved statuses
+			# Create installments first
 			self.create_installments()
+			
+			# Create invoices
+			self.create_invoices()
 
 	def create_installments(self):
 		pinjaman = frappe.get_doc("Pinjaman", self.pinjaman_id)
@@ -56,7 +60,7 @@ class PinjamanPencairan(Document):
 				doc.pinjaman_id = self.pinjaman_id
 				doc.no = i
 				doc.due_date = current_due_date
-				doc.nominal_pokok = principal_payment + monthly_admin_fee
+				doc.nominal_pokok = principal_payment
 				doc.nominal_bunga = interest_payment
 				doc.insert()
 				
@@ -64,8 +68,8 @@ class PinjamanPencairan(Document):
 
 		else:
 			# --- Standard Flat Logic ---
-			# Nominal Pokok includes Principal + Admin Fee (Monthly)
-			nominal_pokok = (nominal / top) + admin_fee
+			# Nominal Pokok includes Principal only
+			nominal_pokok = (nominal / top)
 			nominal_bunga = nominal * (rate_percent / 100)
 
 			for i in range(1, top + 1):
@@ -75,6 +79,109 @@ class PinjamanPencairan(Document):
 				doc.due_date = current_due_date
 				doc.nominal_pokok = nominal_pokok
 				doc.nominal_bunga = nominal_bunga
-				doc.insert()
+				doc.insert(ignore_permissions=True)
 				
 				current_due_date = current_due_date + relativedelta(months=1)
+
+
+	def create_invoices(self):
+		"""
+		Submit disbursement invoice and create installment invoices
+		"""
+		from kopmp.utils.invoice import create_installment_invoices
+		
+		try:
+			# Submit the existing disbursement invoice (created when Pinjaman was created)
+			if self.disbursement_invoice:
+				invoice = frappe.get_doc("Sales Invoice", self.disbursement_invoice)
+				if invoice.docstatus == 0:  # If still draft
+					invoice.flags.ignore_permissions = True
+					invoice.submit()
+					
+					# Force status to 'Paid' to indicate Disbursement Complete (UI fix)
+					invoice.db_set('status', 'Paid', update_modified=False)
+					
+					frappe.logger().info(f"Submitted disbursement invoice {invoice.name}")
+			else:
+				frappe.msgprint("Warning: No disbursement invoice found to submit", indicator="orange")
+			
+			# Create installment invoices
+			installment_invoices = create_installment_invoices(self.pinjaman_id)
+			
+			frappe.msgprint(
+				f"Disbursement approved! Created {len(installment_invoices)} installment invoices"
+			)
+			
+		except Exception as e:
+			frappe.log_error(f"Error processing invoices: {str(e)}", "Pinjaman Invoice Creation")
+			frappe.msgprint(f"Warning: Failed to process invoices. Error: {str(e)}", indicator="orange")
+
+@frappe.whitelist(allow_guest=True)
+def get_pencairan_by_pinjaman(pinjaman_id=None):
+	"""
+	Get Pinjaman Pencairan data. 
+	If pinjaman_id is provided, filter by it. If not found, return "not found".
+	If not provided, return all.
+	"""
+	filters = {}
+	if pinjaman_id:
+		filters["pinjaman_id"] = pinjaman_id
+
+	data = frappe.get_all("Pinjaman Pencairan", 
+		filters=filters,
+		fields=["name", "pinjaman_id", "nominal", "status", "request_at", "approved_at"],
+		order_by="creation desc"
+	)
+	
+	if pinjaman_id and not data:
+		frappe.response["message"] = "not found"
+		frappe.response["data"] = []
+
+	else:
+		frappe.response["message"] = "success"
+		frappe.response["data"] = data
+
+
+@frappe.whitelist(allow_guest=True)
+def process_pencairan(pencairan_id, action):
+	"""
+	Process Pinjaman Pencairan application (Approve or Reject).
+	Action: 'approved' | 'reject'
+	"""
+	try:
+		pencairan = frappe.get_doc("Pinjaman Pencairan", pencairan_id)
+		
+		# Validation
+		if pencairan.status != "Requested":
+			frappe.response["message"] = "error"
+			frappe.response["data"] = f"Pencairan status is {pencairan.status}, cannot process."
+			return
+
+		action_lower = action.lower() if action else ""
+
+		if action_lower in ["approved", "approve"]:
+			# Approve Logic
+			pencairan.status = "Approved"
+			pencairan.approved_at = frappe.utils.now_datetime()
+			pencairan.save(ignore_permissions=True)
+			pencairan.submit()
+			
+			frappe.response["message"] = "success"
+			frappe.response["data"] = pencairan
+
+		elif action_lower in ["reject", "rejected"]:
+			# Reject Logic
+			pencairan.status = "Rejected"
+			pencairan.save(ignore_permissions=True)
+			
+			frappe.response["message"] = "success"
+			frappe.response["data"] = pencairan
+
+		else:
+			frappe.response["message"] = "error"
+			frappe.response["data"] = f"Invalid action: {action}. Use 'approved' or 'reject'."
+		
+	except Exception as e:
+		frappe.log_error(f"Error processing pencairan: {str(e)}", "Process Pencairan API")
+		frappe.response["message"] = "error"
+		frappe.response["data"] = str(e)

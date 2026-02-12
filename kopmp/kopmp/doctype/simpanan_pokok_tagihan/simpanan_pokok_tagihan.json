@@ -1,0 +1,72 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:SIMPKTA-.#####",
+ "creation": "2026-02-11 16:25:32.565805",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_vsjq",
+  "simpanan_pokok_id",
+  "nominal",
+  "due_date",
+  "paid_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_vsjq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "simpanan_pokok_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Simpanan Pokok ID",
+   "options": "Simpanan Pokok",
+   "reqd": 1
+  },
+  {
+   "fieldname": "nominal",
+   "fieldtype": "Currency",
+   "label": "Nominal"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "paid_date",
+   "fieldtype": "Date",
+   "label": "Paid Date"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-11 16:53:11.845406",
+ "modified_by": "Administrator",
+ "module": "KopMP",
+ "name": "Simpanan Pokok Tagihan",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -12,8 +12,8 @@ frappe.ui.form.on("Pinjaman", {
 
         // Aggressively hide Submit button
         setTimeout(() => {
-            frm.page.remove_inner_button('Submit');
-            frm.page.remove_inner_button(__("Submit"));
+            // frm.page.remove_inner_button('Submit');
+            // frm.page.remove_inner_button(__("Submit"));
 
             // CSS/jQuery fallback
             frm.page.wrapper.find('button[data-label="Submit"]').hide();

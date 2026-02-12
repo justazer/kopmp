@@ -40,6 +40,7 @@
   {
    "fieldname": "no",
    "fieldtype": "Int",
+   "in_list_view": 1,
    "label": "No",
    "reqd": 1
   },
@@ -97,6 +98,7 @@
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Amended From",
    "no_copy": 1,
    "options": "Pinjaman Installment",
@@ -108,7 +110,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-29 15:53:01.783097",
+ "modified": "2026-02-05 15:59:22.808351",
  "modified_by": "Administrator",
  "module": "KopMP",
  "name": "Pinjaman Installment",

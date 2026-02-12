@@ -10,7 +10,8 @@
   "tipe",
   "admin_fee",
   "start_date",
-  "end_date"
+  "end_date",
+  "status"
  ],
  "fields": [
   {
@@ -35,10 +36,16 @@
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "End Date"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "status",
+   "options": "Active\nInactive"
   }
  ],
  "links": [],
- "modified": "2026-01-29 16:04:42.706895",
+ "modified": "2026-02-09 13:58:08.277633",
  "modified_by": "Administrator",
  "module": "KopMP",
  "name": "Pinjaman Produk",

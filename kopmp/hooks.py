@@ -137,13 +137,38 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Payment Entry": {
+		"on_submit": "kopmp.utils.payment.update_installment_payment_status",
+		"on_cancel": "kopmp.utils.payment.cancel_installment_payment"
+	}
+}
+
+# Fixtures
+# --------
+# Export fixtures for easier deployment
+
+fixtures = [
+	{
+		"dt": "Custom Field",
+		"filters": [
+			[
+				"name", "in", [
+					"Sales Invoice-custom_pinjaman_section",
+					"Sales Invoice-custom_pinjaman_id",
+					"Sales Invoice-custom_pinjaman_pencairan_id",
+					"Sales Invoice-custom_pinjaman_installment_id",
+					"Sales Invoice-custom_invoice_type",
+					"Sales Invoice-custom_installment_number",
+					"Pinjaman Pencairan-disbursement_invoice",
+					"Pinjaman Installment-installment_invoice",
+					"Pinjaman Installment-payment_status",
+					"Pinjaman Installment-payment_entry"
+				]
+			]
+		]
+	}
+]
 
 # Scheduled Tasks
 # ---------------

@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:SIMWT-.#####",
+ "creation": "2026-02-11 16:48:41.388237",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ver9",
+  "simpanan_wajib_id",
+  "nominal",
+  "due_date",
+  "paid_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ver9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "simpanan_wajib_id",
+   "fieldtype": "Link",
+   "label": "SImpanan Wajib",
+   "options": "Simpanan Wajib"
+  },
+  {
+   "fieldname": "nominal",
+   "fieldtype": "Currency",
+   "label": "Nominal"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "paid_date",
+   "fieldtype": "Date",
+   "label": "Paid Date"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-11 16:58:46.527456",
+ "modified_by": "Administrator",
+ "module": "KopMP",
+ "name": "Simpanan Wajib Tagihan",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

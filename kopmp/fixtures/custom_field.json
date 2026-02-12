@@ -1,0 +1,112 @@
+[
+    {
+        "doctype": "Custom Field",
+        "name": "Sales Invoice-custom_pinjaman_section",
+        "dt": "Sales Invoice",
+        "fieldname": "custom_pinjaman_section",
+        "label": "Pinjaman Details",
+        "fieldtype": "Section Break",
+        "insert_after": "customer_name",
+        "collapsible": 1
+    },
+    {
+        "doctype": "Custom Field",
+        "name": "Sales Invoice-custom_pinjaman_id",
+        "dt": "Sales Invoice",
+        "fieldname": "custom_pinjaman_id",
+        "label": "Pinjaman",
+        "fieldtype": "Link",
+        "options": "Pinjaman",
+        "insert_after": "custom_pinjaman_section",
+        "read_only": 1
+    },
+    {
+        "doctype": "Custom Field",
+        "name": "Sales Invoice-custom_pinjaman_pencairan_id",
+        "dt": "Sales Invoice",
+        "fieldname": "custom_pinjaman_pencairan_id",
+        "label": "Pinjaman Pencairan",
+        "fieldtype": "Link",
+        "options": "Pinjaman Pencairan",
+        "insert_after": "custom_pinjaman_id",
+        "read_only": 1
+    },
+    {
+        "doctype": "Custom Field",
+        "name": "Sales Invoice-custom_pinjaman_installment_id",
+        "dt": "Sales Invoice",
+        "fieldname": "custom_pinjaman_installment_id",
+        "label": "Pinjaman Installment",
+        "fieldtype": "Link",
+        "options": "Pinjaman Installment",
+        "insert_after": "custom_pinjaman_pencairan_id",
+        "read_only": 1
+    },
+    {
+        "doctype": "Custom Field",
+        "name": "Sales Invoice-custom_invoice_type",
+        "dt": "Sales Invoice",
+        "fieldname": "custom_invoice_type",
+        "label": "Invoice Type",
+        "fieldtype": "Select",
+        "options": "\nDisbursement\nInstallment",
+        "insert_after": "custom_pinjaman_installment_id",
+        "read_only": 1
+    },
+    {
+        "doctype": "Custom Field",
+        "name": "Sales Invoice-custom_installment_number",
+        "dt": "Sales Invoice",
+        "fieldname": "custom_installment_number",
+        "label": "Installment Number",
+        "fieldtype": "Int",
+        "depends_on": "eval:doc.custom_invoice_type=='Installment'",
+        "insert_after": "custom_invoice_type",
+        "read_only": 1
+    },
+    {
+        "doctype": "Custom Field",
+        "name": "Pinjaman Pencairan-disbursement_invoice",
+        "dt": "Pinjaman Pencairan",
+        "fieldname": "disbursement_invoice",
+        "label": "Disbursement Invoice",
+        "fieldtype": "Link",
+        "options": "Sales Invoice",
+        "read_only": 1,
+        "insert_after": "approved_at"
+    },
+    {
+        "doctype": "Custom Field",
+        "name": "Pinjaman Installment-installment_invoice",
+        "dt": "Pinjaman Installment",
+        "fieldname": "installment_invoice",
+        "label": "Installment Invoice",
+        "fieldtype": "Link",
+        "options": "Sales Invoice",
+        "read_only": 1,
+        "insert_after": "paid_date"
+    },
+    {
+        "doctype": "Custom Field",
+        "name": "Pinjaman Installment-payment_status",
+        "dt": "Pinjaman Installment",
+        "fieldname": "payment_status",
+        "label": "Payment Status",
+        "fieldtype": "Select",
+        "options": "\nUnpaid\nPartial\nPaid\nOverdue",
+        "default": "Unpaid",
+        "insert_after": "installment_invoice",
+        "in_list_view": 1
+    },
+    {
+        "doctype": "Custom Field",
+        "name": "Pinjaman Installment-payment_entry",
+        "dt": "Pinjaman Installment",
+        "fieldname": "payment_entry",
+        "label": "Payment Entry",
+        "fieldtype": "Link",
+        "options": "Payment Entry",
+        "read_only": 1,
+        "insert_after": "payment_status"
+    }
+]
