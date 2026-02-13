@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:SIMWT-.#####",
+ "autoname": "format:SIMWT-{#####}",
  "creation": "2026-02-11 16:48:41.388237",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -20,6 +20,7 @@
   {
    "fieldname": "simpanan_wajib_id",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "SImpanan Wajib",
    "options": "Simpanan Wajib"
   },
@@ -31,18 +32,20 @@
   {
    "fieldname": "due_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Due Date"
   },
   {
    "fieldname": "paid_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Paid Date"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-11 16:58:46.527456",
+ "modified": "2026-02-12 11:28:54.457285",
  "modified_by": "Administrator",
  "module": "KopMP",
  "name": "Simpanan Wajib Tagihan",

@@ -213,10 +213,121 @@ Create a new loan product.
 ## 5. Invoices
 
 ### Get Loan Invoices
-Get Sales Invoices related to loans.
+Get Sales Invoices related to loans and savings.
 
 - **Endpoint**: `kopmp.utils.invoice.get_loan_invoices`
 - **Method**: `GET`
 - **Access**: Public (Guest Allowed)
 - **Parameters**:
-  - `flow_type` (str, optional): 'Disbursement' or 'Installment'
+  - `flow_type` (str, optional): 'income' or 'outcome'
+
+---
+
+## 6. Simpanan (Saving)
+
+### Get Simpanan Pokok List
+Get all Simpanan Pokok members.
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_pokok.simpanan_pokok.get_list`
+- **Method**: `GET`
+- **Access**: Public (Guest Allowed)
+
+### Get Simpanan Pokok Detail
+Get Simpanan Pokok detail by User Profile ID.
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_pokok.simpanan_pokok.get_detail`
+- **Method**: `GET`
+- **Access**: Public (Guest Allowed)
+- **Parameters**:
+  - `profile_id` (str): User Profile ID
+
+### Get Simpanan Pokok Detail By ID
+Get Simpanan Pokok detail by its ID.
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_pokok.simpanan_pokok.get_detail_by_id`
+- **Method**: `GET`
+- **Access**: Public (Guest Allowed)
+- **Parameters**:
+  - `simpanan_pokok_id` (str): Simpanan Pokok ID
+
+### Get Simpanan Wajib List
+Get all Simpanan Wajib members.
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_wajib.simpanan_wajib.get_list`
+- **Method**: `GET`
+- **Access**: Public (Guest Allowed)
+
+### Get Simpanan Wajib Detail
+Get Simpanan Wajib detail by User Profile ID (includes logs).
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_wajib.simpanan_wajib.get_detail`
+- **Method**: `GET`
+- **Access**: Public (Guest Allowed)
+- **Parameters**:
+  - `profile_id` (str): User Profile ID
+
+### Get Simpanan Wajib Detail By ID
+Get Simpanan Wajib detail by its ID (includes logs).
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_wajib.simpanan_wajib.get_detail_by_id`
+- **Method**: `GET`
+- **Access**: Public (Guest Allowed)
+- **Parameters**:
+  - `simpanan_wajib_id` (str): Simpanan Wajib ID
+
+### Get Tagihan List
+Get list of all Simpanan Tagihan (Pokok + Wajib).
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_pokok_tagihan.simpanan_pokok_tagihan.get_tagihan_list`
+- **Method**: `GET`
+- **Access**: Public (Guest Allowed)
+- **Parameters**:
+  - `profile_id` (str, optional): Filter by User Profile ID
+
+### Pay Simpanan Pokok Tagihan
+Pay a Simpanan Pokok Tagihan.
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_pokok_tagihan.simpanan_pokok_tagihan.pay_simpanan_pokok_tagihan`
+- **Method**: `POST`
+- **Access**: Public (Guest Allowed)
+- **Parameters**:
+  - `tagihan_id` (str): Tagihan ID
+
+### Pay Simpanan Wajib Tagihan
+Pay a Simpanan Wajib Tagihan.
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_wajib_tagihan.simpanan_wajib_tagihan.pay_simpanan_wajib_tagihan`
+- **Method**: `POST`
+- **Access**: Public (Guest Allowed)
+- **Parameters**:
+  - `tagihan_id` (str): Tagihan ID
+
+---
+
+## 7. Simpanan Pencairan (Withdrawal)
+
+### Get Simpanan Pencairan List
+Get all Simpanan Pencairan requests.
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_pencairan.simpanan_pencairan.get_list`
+- **Method**: `GET`
+- **Access**: Public (Guest Allowed)
+
+### Get Simpanan Pencairan Detail
+Get Simpanan Pencairan requests for a specific user profile.
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_pencairan.simpanan_pencairan.get_detail`
+- **Method**: `GET`
+- **Access**: Public (Guest Allowed)
+- **Parameters**:
+  - `profile_id` (str): User Profile ID
+
+### Approve/Reject Simpanan Pencairan
+Approve or reject a withdrawal request.
+
+- **Endpoint**: `kopmp.kopmp.doctype.simpanan_pencairan.simpanan_pencairan.approve_pencairan`
+- **Method**: `POST`
+- **Access**: Public (Guest Allowed)
+- **Parameters**:
+  - `pencairan_id` (str): Pencairan ID
+  - `action` (str): 'approve' or 'reject'

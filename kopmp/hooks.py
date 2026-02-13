@@ -178,7 +178,8 @@ scheduler_events = {
 # 		"kopmp.tasks.all"
 # 	],
 	"daily": [
-		"kopmp.scheduled_tasks.update_denda_harian"
+		"kopmp.scheduled_tasks.update_denda_harian",
+		"kopmp.scheduled_tasks_simpanan.create_monthly_simpanan_wajib_tagihan"
 	],
 # 	"hourly": [
 # 		"kopmp.tasks.hourly"

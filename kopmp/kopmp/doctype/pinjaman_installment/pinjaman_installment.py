@@ -60,18 +60,47 @@ def pay_installment(installment_id):
 @frappe.whitelist(allow_guest=True)
 def get_installments(pinjaman_id):
 	"""
-	Get all installments for a specific Pinjaman ID.
+	Get installments for a specific Pinjaman ID.
+	Filter:
+	1. All past unpaid installments (Arrears) with docstatus=1
+	2. Next month's installment ONLY IF today's date > 20
 	"""
+	from frappe.utils import getdate, nowdate, add_months
+	
 	if not pinjaman_id:
 		frappe.response["message"] = "error"
 		frappe.response["data"] = "Pinjaman ID is required"
 		return
 
-	data = frappe.get_all("Pinjaman Installment", 
+	# Get all submitted installments sorted by date
+	all_installments = frappe.get_all("Pinjaman Installment", 
 		filters={"pinjaman_id": pinjaman_id},
 		fields=["name", "pinjaman_id", "no", "due_date", "nominal_pokok", "nominal_bunga", "nominal_denda", "paid_pokok", "paid_bunga", "paid_denda", "paid_date"],
 		order_by="due_date asc"
 	)
 	
+	today = getdate(nowdate())
+	result = []
+	
+	next_month = add_months(today, 1)
+	# Next month 1st date
+	next_month_1st = getdate(f"{next_month.year}-{next_month.month:02d}-01")
+	
+	for inst in all_installments:
+		due_date = getdate(inst.due_date)
+		
+		# Overdue Logic: paid_date is None AND today > due_date
+		# User said "hari ini lebih besar dari pada due_date" (today > due_date)
+		if not inst.paid_date and today > due_date:
+			inst["status"] = "Overdue"
+			result.append(inst)
+			
+		# Upcoming Logic: today > 20 AND due_date is 1st of next month
+		elif today.day > 20 and not inst.paid_date:
+			# Check if due_date is exactly the 1st of next month
+			if due_date == next_month_1st:
+				inst["status"] = "Upcoming"
+				result.append(inst)
+	
 	frappe.response["message"] = "success"
-	frappe.response["data"] = data
+	frappe.response["data"] = result

@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:SIMPK-.#####",
+ "autoname": "format:SIMPK-{#####}",
  "creation": "2026-02-11 14:47:35.998379",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -26,13 +26,14 @@
   {
    "fieldname": "saldo",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Saldo"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-11 16:51:53.628996",
+ "modified": "2026-02-12 11:29:28.282185",
  "modified_by": "Administrator",
  "module": "KopMP",
  "name": "Simpanan Pokok",

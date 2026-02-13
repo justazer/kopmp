@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:SIMPKTA-.#####",
+ "autoname": "format:SIMPKTA-{#####}",
  "creation": "2026-02-11 16:25:32.565805",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -33,18 +33,20 @@
   {
    "fieldname": "due_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Due Date"
   },
   {
    "fieldname": "paid_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Paid Date"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-11 16:53:11.845406",
+ "modified": "2026-02-12 11:29:57.389724",
  "modified_by": "Administrator",
  "module": "KopMP",
  "name": "Simpanan Pokok Tagihan",

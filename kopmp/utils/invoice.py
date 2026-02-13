@@ -358,44 +358,68 @@ def get_default_cost_center(company):
 @frappe.whitelist(allow_guest=True)
 def get_loan_invoices(flow_type=None):
 	"""
-	Get list of Sales Invoices related to loans (Disbursements and Installments).
+	Get list of Sales Invoices categorized as income or outcome.
+	
+	Income:
+		- Simpanan Pokok Tagihan (custom_simpanan_pokok_id is set)
+		- Simpanan Wajib Tagihan (custom_simpanan_wajib_id is set)
+		- Installment payments (custom_invoice_type = 'Installment')
+	
+	Outcome:
+		- Pinjaman Pencairan / Disbursement (custom_invoice_type = 'Disbursement')
+		- Simpanan Pencairan (custom_simpanan_pencairan_id is set)
 	
 	Args:
-		flow_type (str, optional): 'Disbursement' or 'Installment'.
+		flow_type (str, optional): 'income' or 'outcome' to filter.
 		
 	Returns:
-		list: List of invoice dicts with 'flow_type'.
+		list: List of invoice dicts with 'flow_type' (income/outcome).
 	"""
 	
-	conditions = ""
-	params = {}
-	
-	# Determine invoice types based on flow_type
-	if flow_type:
-		if flow_type.lower() in ["disbursement"]:
-			conditions += " AND si.custom_invoice_type = 'Disbursement'"
-		elif flow_type.lower() in ["installment"]:
-			conditions += " AND si.custom_invoice_type = 'Installment'"
-	
-	query = f"""
+	# Build query to get all relevant invoices
+	query = """
 		SELECT 
 			si.name, si.posting_date, si.due_date, si.grand_total, si.status,
-			si.custom_invoice_type, si.custom_pinjaman_id, si.custom_pinjaman_installment_id,
-			p.profile_id,
-			si.custom_invoice_type as flow_type
+			si.customer,
+			si.custom_invoice_type,
+			si.custom_pinjaman_id,
+			si.custom_pinjaman_pencairan_id,
+			si.custom_pinjaman_installment_id,
+			si.custom_simpanan_pokok_id,
+			si.custom_simpanan_wajib_id,
+			si.custom_installment_number
 		FROM 
 			`tabSales Invoice` si
-		LEFT JOIN
-			`tabPinjaman` p ON p.name = si.custom_pinjaman_id
 		WHERE 
-			si.custom_invoice_type IN ('Disbursement', 'Installment')
-			AND si.docstatus = 1
-			{conditions}
+			si.docstatus = 1
+			AND si.custom_invoice_type != '' 
+			AND si.custom_invoice_type IS NOT NULL
 		ORDER BY 
 			si.posting_date DESC, si.creation DESC
 	"""
 	
-	data = frappe.db.sql(query, params, as_dict=True)
+	data = frappe.db.sql(query, as_dict=True)
+	
+	# Income types and Outcome types
+	INCOME_TYPES = ["Installment", "Simpanan Pokok Tagihan", "Simpanan Wajib Tagihan"]
+	OUTCOME_TYPES = ["Disbursement", "Simpanan Pencairan"]
+	
+	# Categorize each invoice as income or outcome
+	for row in data:
+		invoice_type = row.get("custom_invoice_type", "")
+		if invoice_type in INCOME_TYPES:
+			row["flow_type"] = "income"
+		elif invoice_type in OUTCOME_TYPES:
+			row["flow_type"] = "outcome"
+		else:
+			row["flow_type"] = "unknown"
+		row["category"] = invoice_type
+	
+	# Filter by flow_type if provided
+	if flow_type:
+		ft = flow_type.lower()
+		if ft in ["income", "outcome"]:
+			data = [row for row in data if row["flow_type"] == ft]
 	
 	frappe.response["message"] = "success"
 	frappe.response["data"] = data

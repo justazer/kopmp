@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:SIMWA-.#####",
+ "autoname": "format:SIMWA-{#####}",
  "creation": "2026-02-11 16:33:21.361023",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -18,19 +18,21 @@
   {
    "fieldname": "profile_id",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "User",
    "options": "User Profile"
   },
   {
    "fieldname": "saldo",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Saldo"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-02-11 16:56:48.423543",
+ "modified": "2026-02-12 11:28:26.867253",
  "modified_by": "Administrator",
  "module": "KopMP",
  "name": "Simpanan Wajib",
