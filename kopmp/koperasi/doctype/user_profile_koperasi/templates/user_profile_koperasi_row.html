@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-sm-3">
+        <a href="{{ doc.route }}" class="font-weight-bold">
+            {{ doc.full_name }}
+        </a>
+        <div class="text-muted small">
+            ID: {{ doc.name }}
+        </div>
+    </div>
+    <div class="col-sm-3">
+        {% if doc.status == "Active" %}
+            <span class="indicator green">Active</span>
+        {% elif doc.status == "Pending" %}
+            <span class="indicator orange">Pending</span>
+        {% else %}
+            <span class="indicator red">Inactive</span>
+        {% endif %}
+    </div>
+    <div class="col-sm-3">
+        <!-- Join Date -->
+        <span class="text-muted small">Joined: {{ frappe.format(doc.join_date, {'fieldtype': 'Date'}) }}</span>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:RAT{YYYY}{MM}{DD}{#####}",
+ "creation": "2026-01-26 10:03:15.364372",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "rat_section",
+  "tahun",
+  "status",
+  "summary",
+  "result_file",
+  "finalize_at",
+  "shu_bersih",
+  "laba_ditahan",
+  "shu_terbagi",
+  "date"
+ ],
+ "fields": [
+  {
+   "fieldname": "rat_section",
+   "fieldtype": "Section Break",
+   "label": "RAT"
+  },
+  {
+   "fieldname": "tahun",
+   "fieldtype": "Data",
+   "label": "tahun"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Data",
+   "label": "status"
+  },
+  {
+   "fieldname": "summary",
+   "fieldtype": "Data",
+   "label": "summary"
+  },
+  {
+   "fieldname": "result_file",
+   "fieldtype": "Attach",
+   "label": "result_file"
+  },
+  {
+   "fieldname": "finalize_at",
+   "fieldtype": "Datetime",
+   "label": "finalize_at"
+  },
+  {
+   "fieldname": "shu_bersih",
+   "fieldtype": "Float",
+   "label": "shu_bersih"
+  },
+  {
+   "fieldname": "laba_ditahan",
+   "fieldtype": "Float",
+   "label": "laba_ditahan"
+  },
+  {
+   "fieldname": "shu_terbagi",
+   "fieldtype": "Float",
+   "label": "shu_terbagi"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "date"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-28 09:47:36.844592",
+ "modified_by": "Administrator",
+ "module": "Koperasi App",
+ "name": "rat",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

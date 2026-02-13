@@ -1,0 +1,89 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:RATUSER{YYYY}{MM}{DD}{#####}",
+ "creation": "2026-01-26 09:56:39.147981",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "ratuser_section",
+  "rat_id",
+  "user_id",
+  "shu_terbagi",
+  "approved_at",
+  "approved_sign",
+  "pencairan"
+ ],
+ "fields": [
+  {
+   "fieldname": "ratuser_section",
+   "fieldtype": "Section Break",
+   "label": "RatUser"
+  },
+  {
+   "fieldname": "rat_id",
+   "fieldtype": "Link",
+   "label": "rat_id",
+   "options": "rat",
+   "reqd": 1
+  },
+  {
+   "fieldname": "user_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "user_id",
+   "options": "user_profile",
+   "reqd": 1
+  },
+  {
+   "fieldname": "shu_terbagi",
+   "fieldtype": "Float",
+   "label": "shu_terbagi",
+   "read_only": 1
+  },
+  {
+   "fieldname": "approved_at",
+   "fieldtype": "Datetime",
+   "label": "approved_at"
+  },
+  {
+   "fieldname": "approved_sign",
+   "fieldtype": "Data",
+   "label": "approved_sign"
+  },
+  {
+   "fieldname": "pencairan",
+   "fieldtype": "Table",
+   "label": "Pencairan",
+   "options": "rat_user_pencairan"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-11 10:13:50.718860",
+ "modified_by": "Administrator",
+ "module": "Koperasi App",
+ "name": "rat_user",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
